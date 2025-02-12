@@ -1,7 +1,4 @@
----
-title: "Imran Nazir Portfolio"
-theme: jekyll-theme-minimal
----
+
 
 # IMRAN NAZIR
 New Delhi | +91 99113 08460 | [imran20001110@gmail.com](mailto:imran20001110@gmail.com) | [in8905@dseu.ac.in](mailto:in8905@dseu.ac.in)  
