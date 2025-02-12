@@ -1,5 +1,5 @@
 # IMRAN NAZIR
-New Delhi | +91 99113 08460 | [imran20001110@gmail.com](mailto:imran20001110@gmail.com) | [DSEU Email](mailto:in8905@dseu.ac.in)  
+New Delhi | +91 99113 08460 | [imran20001110@gmail.com](mailto:imran20001110@gmail.com) | [College Email](mailto:in8905@dseu.ac.in)  
 [LinkedIn](https://www.linkedin.com/in/imran-nazir-240a14265) | [GitHub](https://github.com/imran-nazir0011)
 
 ---
