@@ -3,109 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imran Nazir - Portfolio</title>
+    <title>Imran Nazir - Resume</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.37/dist/vue.global.prod.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900">
-
-    <!-- Header Section -->
-    <header class="text-center py-6 bg-gray-800 text-white">
-        <h1 class="text-3xl font-bold">Imran Nazir</h1>
-        <p class="mt-2">New Delhi | +91 99113 08460 | <a href="mailto:imran20001110@gmail.com" class="text-blue-400">imran20001110@gmail.com</a></p>
-        <p>
-            <a href="https://www.linkedin.com/in/imran-nazir-240a14265" class="text-blue-400">LinkedIn</a> | 
-            <a href="https://github.com/imran-nazir0011" class="text-blue-400">GitHub</a>
-        </p>
-    </header>
-
-    <div class="max-w-4xl mx-auto my-8 p-6 bg-white shadow-md rounded-lg">
+    <div id="app" class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <header class="text-center">
+            <h1 class="text-3xl font-bold">{{ name }}</h1>
+            <p class="text-gray-600">New Delhi | {{ phone }} | <a :href="'mailto:' + email" class="text-blue-600">{{ email }}</a></p>
+            <p><a :href="linkedin" class="text-blue-600">LinkedIn</a> | <a :href="github" class="text-blue-600">GitHub</a></p>
+        </header>
         
-        <!-- Education Section -->
-        <section>
-            <h2 class="text-xl font-semibold bg-gray-200 px-4 py-2 rounded">Education</h2>
-            <table class="w-full mt-3 border-collapse border border-gray-300">
-                <tr class="bg-gray-100">
-                    <th class="border px-4 py-2 text-left">Degree</th>
-                    <th class="border px-4 py-2 text-left">Institution</th>
-                    <th class="border px-4 py-2 text-left">CGPA/%</th>
-                    <th class="border px-4 py-2 text-left">Year</th>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">Secondary & Senior Secondary</td>
-                    <td class="border px-4 py-2">JNV Mungeshpur, Delhi</td>
-                    <td class="border px-4 py-2">X: 90.8% <br> XII: 86%</td>
-                    <td class="border px-4 py-2">2013-2020</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">B.Tech. (ECE)</td>
-                    <td class="border px-4 py-2">DSEU GB Pant Okhla Campus</td>
-                    <td class="border px-4 py-2">7.32 CGPA</td>
-                    <td class="border px-4 py-2">2021-2025</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">Diploma in Data Science</td>
-                    <td class="border px-4 py-2">IIT Madras Online Degree Program</td>
-                    <td class="border px-4 py-2">7.01 CGPA</td>
-                    <td class="border px-4 py-2">2021-2025</td>
-                </tr>
+        <section class="mt-6">
+            <h2 class="text-2xl font-semibold border-b pb-2">🏫 Education</h2>
+            <table class="w-full mt-4 border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border px-4 py-2">Degree</th>
+                        <th class="border px-4 py-2">Institution</th>
+                        <th class="border px-4 py-2">CGPA/%</th>
+                        <th class="border px-4 py-2">Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="edu in education" :key="edu.degree">
+                        <td class="border px-4 py-2">{{ edu.degree }}</td>
+                        <td class="border px-4 py-2">{{ edu.institution }}</td>
+                        <td class="border px-4 py-2">{{ edu.cgpa }}</td>
+                        <td class="border px-4 py-2">{{ edu.year }}</td>
+                    </tr>
+                </tbody>
             </table>
         </section>
-
-        <!-- Experience Section -->
+        
         <section class="mt-6">
-            <h2 class="text-xl font-semibold bg-gray-200 px-4 py-2 rounded">Experience</h2>
-            <div class="mt-3">
-                <h3 class="font-bold">Subject Matter Expert (SME), PhysicsWallah</h3>
-                <p class="text-gray-700">October 2023 - Present</p>
-                <ul class="list-disc ml-6 text-gray-800">
-                    <li>Cleared physics doubts for JEE and NEET students, ensuring clarity and comprehensive understanding.</li>
-                    <li>Collaborated with the doubt-solving team to enhance response quality and improve the overall student satisfaction rate.</li>
-                    <li>Solved over 10,000 doubts with a 95%+ student satisfaction rate.</li>
-                </ul>
-            </div>
-
-            <div class="mt-4">
-                <h3 class="font-bold">Content Writing Intern, Suvidha Foundation</h3>
-                <p class="text-gray-700">July 2023 - August 2023</p>
-                <ul class="list-disc ml-6 text-gray-800">
-                    <li>Completed a 30-day internship focused on content writing, contributing to meaningful projects.</li>
-                    <li>Developed high-quality written materials for various initiatives.</li>
+            <h2 class="text-2xl font-semibold border-b pb-2">💼 Experience</h2>
+            <div v-for="exp in experience" :key="exp.role" class="mt-4">
+                <h3 class="text-lg font-bold">{{ exp.role }} - {{ exp.company }}</h3>
+                <p class="text-gray-600">{{ exp.period }}</p>
+                <ul class="list-disc ml-5 mt-2">
+                    <li v-for="point in exp.details" :key="point">{{ point }}</li>
                 </ul>
             </div>
         </section>
-
-        <!-- Projects Section -->
+        
         <section class="mt-6">
-            <h2 class="text-xl font-semibold bg-gray-200 px-4 py-2 rounded">Projects</h2>
-            <ul class="list-disc ml-6 text-gray-800 mt-3">
-                <li><a href="https://github.com/imran-nazir0011/minor-project-7th-sem" class="text-blue-600 font-semibold">2:1 Switched Capacitor DC-DC Converter Optimization</a></li>
-                <li><a href="https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories" class="text-blue-600 font-semibold">Crime Classification Web App</a></li>
-                <li><a href="https://imran-nazir0011.github.io/Google-Play-Store-Reviews-Analytics/dashboard.html" class="text-blue-600 font-semibold">Google Play Store Reviews Dashboard</a></li>
-                <li><a href="https://medium.com/@imran20001110/sales-dashboard-040501692654" class="text-blue-600 font-semibold">Sales Dashboard</a></li>
+            <h2 class="text-2xl font-semibold border-b pb-2">🚀 Projects</h2>
+            <div v-for="project in projects" :key="project.name" class="mt-4">
+                <h3 class="text-lg font-bold"><a :href="project.link" class="text-blue-600">{{ project.name }}</a></h3>
+                <p><strong>Objective:</strong> {{ project.objective }}</p>
+                <p><strong>Tools Used:</strong> {{ project.tools }}</p>
+                <p><strong>Results:</strong> {{ project.results }}</p>
+            </div>
+        </section>
+        
+        <section class="mt-6">
+            <h2 class="text-2xl font-semibold border-b pb-2">🛠 Skills</h2>
+            <ul class="list-disc ml-5 mt-2">
+                <li v-for="skill in skills" :key="skill">{{ skill }}</li>
             </ul>
         </section>
-
-        <!-- Skills Section -->
-        <section class="mt-6">
-            <h2 class="text-xl font-semibold bg-gray-200 px-4 py-2 rounded">Skills</h2>
-            <p class="mt-3 text-gray-800">
-                <strong>Data Analysis:</strong> Data Cleaning, Statistical Analysis, Data Visualization. <br>
-                <strong>Machine Learning:</strong> Predictive Modeling, Regression, Classification. <br>
-                <strong>Programming Languages:</strong> Python, SQL. <br>
-                <strong>Tools & Frameworks:</strong> Plotly, Jupyter Notebook, Pandas, Power BI, Excel.
-            </p>
-        </section>
-
-        <!-- Certifications Section -->
-        <section class="mt-6">
-            <h2 class="text-xl font-semibold bg-gray-200 px-4 py-2 rounded">Certifications</h2>
-            <ul class="list-disc ml-6 text-gray-800 mt-3">
-                <li><a href="https://drive.google.com/file/d/1_9qdMJcRqSvN2T2MiS8qU7PsLsaha2Di/view?usp=sharing" class="text-blue-600">Data Science & Programming - IIT Madras</a></li>
-                <li><a href="https://www.hackerrank.com/certificates/iframe/389226d63651" class="text-blue-600">SQL (Intermediate) - Hackerrank</a></li>
-            </ul>
-        </section>
-
     </div>
-
+    
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    name: "Imran Nazir",
+                    phone: "+91 99113 08460",
+                    email: "imran20001110@gmail.com",
+                    linkedin: "https://www.linkedin.com/in/imran-nazir-240a14265",
+                    github: "https://github.com/imran-nazir0011",
+                    education: [
+                        { degree: "Secondary and Senior Secondary Education", institution: "JNV Mungeshpur, Delhi", cgpa: "X: 90.8% / XII: 86%", year: "2013-2020" },
+                        { degree: "B.Tech. (Electronics and Communication Engineering)", institution: "DSEU GB Pant Okhla Campus", cgpa: "7.32 CGPA", year: "2021-2025" },
+                        { degree: "Diploma in Data Science", institution: "IIT Madras Online Degree Program", cgpa: "7.01 CGPA", year: "2021-2025" }
+                    ],
+                    experience: [
+                        { role: "Subject Matter Expert (SME)", company: "PhysicsWallah (PW)", period: "Oct 2023 - Present", details: ["Cleared physics doubts for JEE and NEET students.", "Collaborated with the doubt-solving team to enhance response quality.", "Solved over 10,000+ doubts with a 95%+ student satisfaction rate."] },
+                        { role: "Content Writing Intern", company: "Suvidha Foundation", period: "July 2023 - Aug 2023", details: ["Completed a 30-day internship focused on content writing.", "Contributed to outreach and awareness efforts."] }
+                    ],
+                    projects: [
+                        { name: "Design and Analysis of a 2:1 Switched Capacitor DC-DC Converter", link: "https://github.com/imran-nazir0011/minor-project-7th-sem", objective: "Optimized a DC-DC converter.", tools: "LTSPICE, C++, Python", results: "Achieved optimal parameters, reducing ripple and improving transient response." },
+                        { name: "Crime Classification Web App", link: "https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories", objective: "Developed a crime classification model.", tools: "Python, LightGBM, Flask, Scikit-learn", results: "Achieved 87% accuracy." }
+                    ],
+                    skills: ["Data Analysis", "Machine Learning", "Natural Language Processing", "Data Engineering", "Python", "SQL", "Power BI", "Excel"]
+                };
+            }
+        });
+        app.mount("#app");
+    </script>
 </body>
 </html>
