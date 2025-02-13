@@ -63,14 +63,14 @@
         </ul>
     </div>
     
-    <script>
-        Vue.createApp({
+<script>
+        const app = Vue.createApp({
             data() {
                 return {
-                    darkMode: false,
                     name: "Imran Nazir",
                     phone: "+91 99113 08460",
                     email: "imran20001110@gmail.com",
+                    secondaryEmail: "in8905@dseu.ac.in",
                     linkedin: "https://www.linkedin.com/in/imran-nazir-240a14265",
                     github: "https://github.com/imran-nazir0011",
                     education: [
@@ -84,21 +84,26 @@
                     ],
                     projects: [
                         { name: "Design and Analysis of a 2:1 Switched Capacitor DC-DC Converter", link: "https://github.com/imran-nazir0011/minor-project-7th-sem", objective: "Optimized a DC-DC converter.", tools: "LTSPICE, C++, Python", results: "Achieved optimal parameters, reducing ripple and improving transient response." },
-                        { name: "Crime Classification Web App", link: "https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories", objective: "Developed a crime classification model.", tools: "Python, LightGBM, Flask, Scikit-learn", results: "Achieved 87% accuracy." }
+                        { name: "Crime Classification Web App", link: "https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories", objective: "Developed a crime classification model.", tools: "Python, LightGBM, Flask, Scikit-learn", results: "Achieved 87% accuracy." },
+                        { name: "Google Play Store Reviews Analytics Dashboard", link: "https://imran-nazir0011.github.io/Google-Play-Store-Reviews-Analytics/dashboard.html", objective: "Built an interactive dashboard for analyzing Google Play Store reviews.", tools: "Python, Plotly, Pandas, NumPy, NLTK, HTML, CSS", results: "Provided key insights into app ratings, user sentiment, and category trends." },
+                        { name: "A-Z Household Services Web App", link: "https://github.com/imran-nazir0011/Household-Services-App-v1", objective: "Developed a web application connecting customers with service professionals.", tools: "Flask, SQLite, Bootstrap, Python", results: "Improved convenience & efficiency in household service bookings." },
+                        { name: "Sales Dashboard", link: "https://medium.com/@imran20001110/sales-dashboard-040501692654", objective: "Developed an interactive Power BI dashboard for analyzing sales data.", tools: "Power BI, Python (Pandas, NumPy)", results: "Enabled data-driven decision-making based on sales trends." }
                     ],
                     skills: ["Data Analysis", "Machine Learning", "Natural Language Processing", "Data Engineering", "Python", "SQL", "Power BI", "Excel"],
                     certifications: [
-                        { name: "Foundation Level in Data Science and Programming", institution: "IIT Madras", year: "2022", link: "https://drive.google.com/file/d/1_9qdMJcRqSvN2T2MiS8qU7PsLsaha2Di/view" },
-                        { name: "Machine Learning using NumPy", institution: "IIT Madras", year: "2024", link: "https://drive.google.com/file/d/1GyorX8RA-Is0xDF0v5ZclpcTLHD_Zk0z/view" }
+                        { name: "Foundation Level in Data Science and Programming", institution: "IIT Madras BS Degree Program", date: "April 2022", link: "https://drive.google.com/file/d/1_9qdMJcRqSvN2T2MiS8qU7PsLsaha2Di/view?usp=sharing" },
+                        { name: "Machine Learning using NumPy", institution: "IIT Madras BS Degree Program", date: "September 2024", link: "https://drive.google.com/file/d/1GyorX8RA-Is0xDF0v5ZclpcTLHD_Zk0z/view" },
+                        { name: "SQL (Intermediate) - Hackerrank", date: "October 2024", link: "https://www.hackerrank.com/certificates/iframe/389226d63651" }
                     ],
-                    activities: [
-                        "Scouts and Guides program (2015-2019)",
-                        "NCC cadet for 2 years (2016-2018)",
-                        "1st place in Virtual Trading Competition (IIT Palakkad)"
+                    extracurricular: [
+                        "Participated in the Scouts and Guides program (2015-2019), achieving various scouting milestones.",
+                        "Served as an NCC cadet for 2 years (2016-2018), developing leadership, discipline, and teamwork skills.",
+                        "Secured 1st place in a Virtual Trading Competition organized by IIT PALAKKAD, demonstrating a keen understanding of financial markets and investment strategies."
                     ]
                 };
             }
-        }).mount("#app");
+        });
+        app.mount("#app");
     </script>
 </body>
 </html>
