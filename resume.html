@@ -4,72 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imran Nazir - Resume</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.37/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
-    <div id="app" class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-        <header class="text-center">
-            <h1 class="text-3xl font-bold">{{ name }}</h1>
-            <p class="text-gray-600">New Delhi | {{ phone }} | <a :href="'mailto:' + email" class="text-blue-600">{{ email }}</a></p>
-            <p><a :href="linkedin" class="text-blue-600">LinkedIn</a> | <a :href="github" class="text-blue-600">GitHub</a></p>
-        </header>
+<body :class="darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'">
+    <div id="app" class="max-w-4xl mx-auto py-8 px-6">
+        <button @click="darkMode = !darkMode" class="p-2 mb-4 bg-blue-500 text-white rounded-md">Toggle Mode</button>
         
-        <section class="mt-6">
-            <h2 class="text-2xl font-semibold border-b pb-2">🏫 Education</h2>
-            <table class="w-full mt-4 border-collapse border border-gray-300">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="border px-4 py-2">Degree</th>
-                        <th class="border px-4 py-2">Institution</th>
-                        <th class="border px-4 py-2">CGPA/%</th>
-                        <th class="border px-4 py-2">Year</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="edu in education" :key="edu.degree">
-                        <td class="border px-4 py-2">{{ edu.degree }}</td>
-                        <td class="border px-4 py-2">{{ edu.institution }}</td>
-                        <td class="border px-4 py-2">{{ edu.cgpa }}</td>
-                        <td class="border px-4 py-2">{{ edu.year }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <div class="text-center">
+            <h1 class="text-4xl font-bold">{{ name }}</h1>
+            <p class="text-lg">New Delhi | {{ phone }} | <a :href="'mailto:' + email" class="text-blue-400">{{ email }}</a></p>
+            <p><a :href="linkedin" class="text-blue-400">LinkedIn</a> | <a :href="github" class="text-blue-400">GitHub</a></p>
+        </div>
         
-        <section class="mt-6">
-            <h2 class="text-2xl font-semibold border-b pb-2">💼 Experience</h2>
-            <div v-for="exp in experience" :key="exp.role" class="mt-4">
-                <h3 class="text-lg font-bold">{{ exp.role }} - {{ exp.company }}</h3>
-                <p class="text-gray-600">{{ exp.period }}</p>
-                <ul class="list-disc ml-5 mt-2">
-                    <li v-for="point in exp.details" :key="point">{{ point }}</li>
+        <h2 class="text-2xl font-semibold mt-6">Education</h2>
+        <ul>
+            <li v-for="edu in education" :key="edu.degree" class="mt-2 border-l-4 border-blue-400 pl-2">
+                <strong>{{ edu.degree }}</strong> - {{ edu.institution }} ({{ edu.year }})<br>
+                <span class="text-gray-500">{{ edu.cgpa }}</span>
+            </li>
+        </ul>
+        
+        <h2 class="text-2xl font-semibold mt-6">Experience</h2>
+        <ul>
+            <li v-for="exp in experience" :key="exp.role" class="mt-2 border-l-4 border-green-400 pl-2">
+                <strong>{{ exp.role }}</strong> - {{ exp.company }} ({{ exp.period }})
+                <ul class="list-disc pl-5 text-sm">
+                    <li v-for="detail in exp.details" :key="detail">{{ detail }}</li>
                 </ul>
-            </div>
-        </section>
+            </li>
+        </ul>
         
-        <section class="mt-6">
-            <h2 class="text-2xl font-semibold border-b pb-2">🚀 Projects</h2>
-            <div v-for="project in projects" :key="project.name" class="mt-4">
-                <h3 class="text-lg font-bold"><a :href="project.link" class="text-blue-600">{{ project.name }}</a></h3>
+        <h2 class="text-2xl font-semibold mt-6">Projects</h2>
+        <ul>
+            <li v-for="project in projects" :key="project.name" class="mt-2 border-l-4 border-yellow-400 pl-2">
+                <a :href="project.link" class="text-blue-400 font-semibold">{{ project.name }}</a>
                 <p><strong>Objective:</strong> {{ project.objective }}</p>
-                <p><strong>Tools Used:</strong> {{ project.tools }}</p>
+                <p><strong>Tools:</strong> {{ project.tools }}</p>
                 <p><strong>Results:</strong> {{ project.results }}</p>
-            </div>
-        </section>
+            </li>
+        </ul>
         
-        <section class="mt-6">
-            <h2 class="text-2xl font-semibold border-b pb-2">🛠 Skills</h2>
-            <ul class="list-disc ml-5 mt-2">
-                <li v-for="skill in skills" :key="skill">{{ skill }}</li>
-            </ul>
-        </section>
+        <h2 class="text-2xl font-semibold mt-6">Skills</h2>
+        <div class="flex flex-wrap mt-2">
+            <span v-for="skill in skills" :key="skill" class="m-1 px-3 py-1 bg-gray-200 text-gray-900 rounded-full dark:bg-gray-700 dark:text-white">{{ skill }}</span>
+        </div>
+        
+        <h2 class="text-2xl font-semibold mt-6">Certifications</h2>
+        <ul>
+            <li v-for="cert in certifications" :key="cert.name" class="mt-2 border-l-4 border-purple-400 pl-2">
+                <a :href="cert.link" class="text-blue-400">{{ cert.name }}</a> ({{ cert.institution }}, {{ cert.year }})
+            </li>
+        </ul>
+        
+        <h2 class="text-2xl font-semibold mt-6">Extracurricular Activities</h2>
+        <ul>
+            <li v-for="activity in activities" :key="activity" class="mt-2">{{ activity }}</li>
+        </ul>
     </div>
     
     <script>
-        const app = Vue.createApp({
+        Vue.createApp({
             data() {
                 return {
+                    darkMode: false,
                     name: "Imran Nazir",
                     phone: "+91 99113 08460",
                     email: "imran20001110@gmail.com",
@@ -88,11 +86,19 @@
                         { name: "Design and Analysis of a 2:1 Switched Capacitor DC-DC Converter", link: "https://github.com/imran-nazir0011/minor-project-7th-sem", objective: "Optimized a DC-DC converter.", tools: "LTSPICE, C++, Python", results: "Achieved optimal parameters, reducing ripple and improving transient response." },
                         { name: "Crime Classification Web App", link: "https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories", objective: "Developed a crime classification model.", tools: "Python, LightGBM, Flask, Scikit-learn", results: "Achieved 87% accuracy." }
                     ],
-                    skills: ["Data Analysis", "Machine Learning", "Natural Language Processing", "Data Engineering", "Python", "SQL", "Power BI", "Excel"]
+                    skills: ["Data Analysis", "Machine Learning", "Natural Language Processing", "Data Engineering", "Python", "SQL", "Power BI", "Excel"],
+                    certifications: [
+                        { name: "Foundation Level in Data Science and Programming", institution: "IIT Madras", year: "2022", link: "https://drive.google.com/file/d/1_9qdMJcRqSvN2T2MiS8qU7PsLsaha2Di/view" },
+                        { name: "Machine Learning using NumPy", institution: "IIT Madras", year: "2024", link: "https://drive.google.com/file/d/1GyorX8RA-Is0xDF0v5ZclpcTLHD_Zk0z/view" }
+                    ],
+                    activities: [
+                        "Scouts and Guides program (2015-2019)",
+                        "NCC cadet for 2 years (2016-2018)",
+                        "1st place in Virtual Trading Competition (IIT Palakkad)"
+                    ]
                 };
             }
-        });
-        app.mount("#app");
+        }).mount("#app");
     </script>
 </body>
 </html>
