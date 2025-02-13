@@ -6,14 +6,15 @@
     <title>Imran Nazir - Resume</title> 
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body :class="darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'">
-    <div id="app" class="max-w-4xl mx-auto py-8 px-6">
-        <!-- Dark Mode Toggle Button -->
+    <div id="app" class="max-w-4xl mx-auto py-8 px-6 relative">
+        <!-- Dark Mode Toggle Button (Right-Aligned) -->
         <button @click="toggleDarkMode" 
-            class="p-2 mb-4 rounded-md transition duration-300"
-            :class="darkMode ? 'bg-gray-700 text-white' : 'bg-blue-500 text-white'">
-            {{ darkMode ? 'Light Mode' : 'Dark Mode' }}
+        class="absolute top-4 right-4 p-2 rounded-full transition duration-300" 
+        :class="darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900'"
+        v-html="darkMode ? sunIcon : moonIcon">
         </button>
 
         <div class="text-center">
@@ -47,13 +48,22 @@
 
         <h2 class="text-2xl font-semibold mt-6">Projects</h2>
         <ul>
-            <li v-for="project in projects" :key="project.name" class="mt-2 border-l-4 border-yellow-400 pl-2">
-                <a :href="project.link" class="text-blue-400 font-semibold">{{ project.name }}</a>
-                <p><strong>Objective:</strong> {{ project.objective }}</p>
-                <p><strong>Tools:</strong> {{ project.tools }}</p>
-                <p><strong>Results:</strong> {{ project.results }}</p>
+            <li v-for="project in projects" :key="project.name" class="mt-4 border-l-4 border-yellow-400 pl-4">
+                <a :href="project.link" class="text-blue-400 font-semibold text-lg flex items-center">
+                    {{ project.name }}
+                </a>
+                <p class="mt-1"><strong>Objective:</strong> {{ project.objective }}</p>
+                <p class="mt-1"><strong>Tools:</strong></p>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <span v-for="tool in project.tools" :key="tool" 
+                          class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-1 rounded-full text-sm">
+                        {{ tool }}
+                    </span>
+                </div>
+                <p class="mt-2"><strong>Results:</strong> {{ project.results }}</p>
             </li>
         </ul>
+        
 
         <h2 class="text-2xl font-semibold mt-6">Skills</h2>
         <div class="flex flex-wrap mt-2">
@@ -73,7 +83,7 @@
 
         <h2 class="text-2xl font-semibold mt-6">Extracurricular Activities</h2>
         <ul>
-            <li v-for="activity in activities" :key="activity" class="mt-2">{{ activity }}</li>
+            <li v-for="activity in activities" :key="activity" class="mt-2 border-l-4 border-red-200 pl-2">{{ activity }}</li>
         </ul>
     </div>
 
@@ -82,41 +92,154 @@
         data() {
             return {
                 darkMode: false, // Dark mode state
+                sunIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun w-6 h-6"><circle cx="12" cy="12" r="5"/><line x1="12" x2="12" y1="1" y2="3"/><line x1="12" x2="12" y1="21" y2="23"/><line x1="4.22" x2="5.64" y1="4.22" y2="5.64"/><line x1="18.36" x2="19.78" y1="18.36" y2="19.78"/><line x1="1" x2="3" y1="12" y2="12"/><line x1="21" x2="23" y1="12" y2="12"/><line x1="4.22" x2="5.64" y1="19.78" y2="18.36"/><line x1="18.36" x2="19.78" y1="5.64" y2="4.22"/></svg>',
+                moonIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon w-6 h-6"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>',
+
                 name: "Imran Nazir",
                 phone: "+91 99113 08460",
                 email: "imran20001110@gmail.com",
                 linkedin: "https://www.linkedin.com/in/imran-nazir-240a14265",
                 github: "https://github.com/imran-nazir0011",
                 education: [
-                    { degree: "Secondary and Senior Secondary Education", institution: "JNV Mungeshpur, Delhi", cgpa: "X: 90.8% / XII: 86%", year: "2013-2020" },
                     { degree: "B.Tech. (Electronics and Communication Engineering)", institution: "DSEU GB Pant Okhla Campus", cgpa: "7.32 CGPA", year: "2021-2025" },
-                    { degree: "Diploma in Data Science", institution: "IIT Madras Online Degree Program", cgpa: "7.01 CGPA", year: "2021-2025" }
+                    { degree: "Diploma in Data Science", institution: "IIT Madras Online Degree Program", cgpa: "7.01 CGPA", year: "2021-2025" },
+                    { degree: "Secondary and Senior Secondary Education", institution: "JNV Mungeshpur, Delhi", cgpa: "X: 90.8% / XII: 86.5%", year: "2013-2020" }
                 ],
                 experience: [
                     { role: "Subject Matter Expert (SME)", company: "PhysicsWallah (PW)", period: "Oct 2023 - Present", details: ["Cleared physics doubts for JEE and NEET students.", "Collaborated with the doubt-solving team to enhance response quality.", "Solved over 10,000+ doubts with a 95%+ student satisfaction rate."] },
                     { role: "Content Writing Intern", company: "Suvidha Foundation", period: "July 2023 - Aug 2023", details: ["Completed a 30-day internship focused on content writing.", "Contributed to outreach and awareness efforts."] }
                 ],
                 projects: [
-                    { name: "Design and Analysis of a 2:1 Switched Capacitor DC-DC Converter", link: "https://github.com/imran-nazir0011/minor-project-7th-sem", objective: "Optimized a DC-DC converter.", tools: "LTSPICE, C++, Python", results: "Achieved optimal parameters, reducing ripple and improving transient response." }
+                        {
+                            "name": "Design and Analysis of a 2:1 Switched Capacitor DC-DC Converter",
+                            "link": "https://github.com/imran-nazir0011/minor-project-7th-sem",
+                            "objective": "Optimized a 2:1 switched capacitor DC-DC converter for improved performance.",
+                            "tools": [
+                                "LTSPICE",
+                                "Python",
+                                "NumPy",
+                                "Pandas",
+                                "Matplotlib",
+                                "Seaborn",
+                                "Scikit-learn",
+                                "SciPy"
+                            ],
+                            "results": "Achieved optimal parameters, reducing ripple and improving transient response."
+                        },
+                        {
+                            "name": "Crime Classification Web App",
+                            "link": "https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories",
+                            "objective": "Developed a crime classification model using the LA Police dataset.",
+                            "tools": [
+                                "Python",
+                                "NumPy",
+                                "Pandas",
+                                "Matplotlib",
+                                "LightGBM",
+                                "Flask",
+                                "Scikit-learn",
+                                "Pickle"
+                            ],
+                            "results": "The web app improved response time for law enforcement with 87% accuracy."
+                        },
+                        {
+                            "name": "Google Play Store Reviews Analytics Dashboard",
+                            "link": "https://imran-nazir0011.github.io/Google-Play-Store-Reviews-Analytics/dashboard.html",
+                            "objective": "Built an interactive dashboard for analyzing Google Play Store reviews.",
+                            "tools": [
+                                "Python",
+                                "Plotly",
+                                "Pandas",
+                                "NumPy",
+                                "NLTK",
+                                "HTML",
+                                "CSS"
+                            ],
+                            "results": "Provided key insights into app ratings, user sentiment, and category trends."
+                        },
+                        {
+                            "name": "A-Z Household Services Web App",
+                            "link": "https://github.com/imran-nazir0011/Household-Services-App-v1",
+                            "objective": "Developed a web application connecting customers with service professionals.",
+                            "tools": [
+                                "Flask",
+                                "SQLite",
+                                "Bootstrap",
+                                "Matplotlib",
+                                "Python"
+                            ],
+                            "results": "Improved convenience & efficiency in household service bookings."
+                        },
+                        {
+                            "name": "Sales Dashboard",
+                            "link": "https://medium.com/@imran20001110/sales-dashboard-040501692654",
+                            "objective": "Developed an interactive Power BI dashboard for analyzing sales data.",
+                            "tools": [
+                                "Power BI",
+                                "Python",
+                                "Pandas",
+                                "NumPy"
+                            ],
+                            "results": "Enabled data-driven decision-making based on sales trends."
+                        }
+                    ],
+                    skills: [
+                        "Data Analysis",
+                        "Machine Learning",
+                        "Natural Language Processing (NLP)",
+                        "Python", "SQL"],
+                        certifications: [
+                    { 
+                        name: "Data Analyst & Real-Time Project Training", 
+                        institution: "NullClass", 
+                        year: "January 2025",  
+                        description: "Completed online training on Data Analysis and real-time project training on building a Google Play Store data analytics system using Python.",
+                        link: "https://www.nullclass.com/certificates/677b98edaf6302498af485ca"
+                    },
+                    { 
+                        name: "SQL (Intermediate)", 
+                        institution: "Hackerrank", 
+                        year: "October 2024", 
+                        link: "https://www.hackerrank.com/certificates/iframe/389226d63651" 
+                    },
+                    { 
+                        name: "Machine Learning using NumPy", 
+                        institution: "IIT Madras BS Degree Program", 
+                        year: "September 2024", 
+                        link: "https://drive.google.com/file/d/1GyorX8RA-Is0xDF0v5ZclpcTLHD_Zk0z/view" 
+                    },
+                    { 
+                        name: "Foundation Level in Data Science and Programming", 
+                        institution: "IIT Madras BS Degree Program", 
+                        year: "April 2022", 
+                        link: "https://drive.google.com/file/d/1_9qdMJcRqSvN2T2MiS8qU7PsLsaha2Di/view?usp=sharing" 
+                    }
                 ],
-                skills: ["Data Analysis", "Machine Learning", "Python", "SQL", "Power BI", "Excel"],
-                certifications: [
-                    { name: "Foundation Level in Data Science and Programming", institution: "IIT Madras BS Degree Program", year: "April 2022", link: "https://drive.google.com/file/d/1_9qdMJcRqSvN2T2MiS8qU7PsLsaha2Di/view?usp=sharing" }
-                ],
-                activities: [
-                    "Participated in Scouts and Guides (2015-2019).",
-                    "Served as an NCC cadet for 2 years (2016-2018)."
-                ]
+
+                        activities: [
+                        "Participated in the Scouts and Guides program (2015-2019), achieving various scouting milestones.",
+                        "Served as an NCC cadet for 2 years (2016-2018), developing leadership, discipline, and teamwork skills.",
+                        "Secured 1st place in a Virtual Trading Competition organized by IIT Palakkad, demonstrating a keen understanding of financial markets and investment strategies."
+                    ]
+
             };
         },
         methods: {
             toggleDarkMode() {
-                this.darkMode = !this.darkMode;
-                document.body.classList.toggle('bg-gray-900', this.darkMode);
-                document.body.classList.toggle('text-white', this.darkMode);
-                document.body.classList.toggle('bg-white', !this.darkMode);
-                document.body.classList.toggle('text-gray-900', !this.darkMode);
-            }
+                    this.darkMode = !this.darkMode;
+                    document.body.classList.toggle('bg-gray-900', this.darkMode);
+                    document.body.classList.toggle('text-white', this.darkMode);
+                    document.body.classList.toggle('bg-white', !this.darkMode);
+                    document.body.classList.toggle('text-gray-900', !this.darkMode);
+                    
+                    this.$nextTick(() => {
+                        lucide.createIcons(); // Refresh icons after DOM update
+                    });
+                }
+
+        },
+        mounted() {
+            lucide.createIcons();
         }
     });
     app.mount("#app");
