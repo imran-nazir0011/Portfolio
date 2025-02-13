@@ -80,4 +80,4 @@ New Delhi | +91 99113 08460 | [imran20001110@gmail.com](mailto:imran20001110@gma
 ## 🌟 Extracurricular Activities
 - Participated in the **Scouts and Guides program** *(2015-2019)*, achieving various **scouting milestones**.
 - Served as an **NCC cadet for 2 years (2016-2018)**, developing **leadership, discipline, and teamwork** skills.
-- Secured **1st place in a Virtual Trading Competition organized by PALAKKAD**, demonstrating **a keen understanding of financial markets and investment strategies**.
+- Secured **1st place in a Virtual Trading Competition organized by IIT PALAKKAD**, demonstrating **a keen understanding of financial markets and investment strategies**.
