@@ -10,21 +10,17 @@
 </head>
 <body :class="darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'">
      <div id="app" class="max-w-4xl mx-auto py-8 px-6 relative">
-     <div class="absolute top-4 right-4 flex flex-col items-end space-y-3">
+        <!-- Dark Mode Toggle Button (Right-Aligned) -->
         <button @click="toggleDarkMode" 
-            class="p-2 rounded-full transition duration-300" 
-            :class="darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900'"
-            v-html="darkMode ? sunIcon : moonIcon">
+        class="absolute top-4 right-4 p-2 rounded-full transition duration-300" 
+        :class="darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900'"
+        v-html="darkMode ? sunIcon : moonIcon">
         </button>
-        
-        <!-- Download Resume Button -->
-        <a href="https://github.com/imran-nazir0011/resume/raw/main/Imran_Nazir_Resume.pdf" 
-            download 
-            class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600">
-            Download Resume (PDF)
-        </a>
-     </div>
-
+        <div class="mt-4">
+            <a href="https://github.com/imran-nazir0011/resume/raw/main/Imran_Nazir_Resume.pdf" download class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600">
+                Download Resume (PDF)
+            </a>
+        </div> 
 
         <div class="text-center">
             <h1 class="text-4xl font-bold">{{ name }}</h1>
