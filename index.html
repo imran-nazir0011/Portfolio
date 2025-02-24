@@ -215,20 +215,21 @@
             </div>
         
             <!-- Desktop Navigation -->
-            <button @click="toggleMobileNav" class="md:hidden text-white focus:outline-none">
-              <span class="menu-icon" :class="{ 'rotate-90': isMobileNavOpen }">☰</span>
+            <button @click="toggleMobileNav" class="md:hidden text-blue focus:outline-none">
+              <span class="menu-icon" :class="{ 'rotate-90': isMobileNavOpen }" >☰</span>
             </button>
             <div class="hidden md:flex items-center space-x-4">
               <ul class="flex space-x-6">
                 <li v-for="item in menuItems" :key="item.link">
                   <a :href="item.link" @click="closeMobileNav" class="hover:text-blue-400">{{ item.name }}</a>
                 </li>
-              </ul>
-              <button @click="toggleDarkMode" class="p-2 rounded-full transition duration-300" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900'">
+              </ul> 
+            </div>
+            <button @click="toggleDarkMode" class="p-2 rounded-full transition duration-300" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900'">
                 <svg v-if="darkMode" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                 <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-              </button>
-            </div>
+            </button>
+
         
             <!-- Mobile Navigation -->
             <div class="mobile-nav" :class="{ 'open': isMobileNavOpen }">
@@ -273,26 +274,35 @@
 </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="section" :class="darkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'">
-            <h2 class="text-3xl font-bold">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                <div v-for="project in projects" :key="project.id" class="project-card rounded-lg shadow-lg p-6 transition duration-300" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'" @click="openProject(project.link)">
-                    <div class="project-image">
-                        <img :src="project.image" class="w-full h-48 object-cover rounded-lg">
-                        <div class="project-description">
-                            <p>{{ project.description }}</p>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold mt-4">{{ project.title }}</h3>
-                </div>
-            </div>
-            <!-- More Projects Button -->
-            <div class="mt-8 text-center">
-                <a href="https://github.com/yourusername" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                    View More Projects
-                </a>
-            </div>
-        </section>
+<section id="projects" class="section" :class="darkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'">
+    <h2 class="text-3xl font-bold text-center">Projects</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-8">
+      <div 
+        v-for="project in projects" 
+        :key="project.id" 
+        class="project-card rounded-lg shadow-lg p-6 transition duration-300 w-full"
+        :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'"
+      >
+        <!-- Slideshow Container with 16:9 Aspect Ratio -->
+        <div class="relative w-full aspect-[16/9] overflow-hidden rounded-lg">
+          <img 
+            :src="project.images[currentImageIndex[project.id]]" 
+            class="w-full h-full object-cover"
+          />
+        </div>
+        
+        <!-- Project Title -->
+        <h3 class="text-2xl font-bold mt-4">{{ project.title }}</h3>
+        <p class="text-lg mt-2">{{ project.description }}</p>
+
+        <!-- View Project Button -->
+        <a :href="project.link" target="_blank" class="block mt-4 text-blue-500 hover:text-blue-700 font-bold text-lg">
+          View Project →
+        </a>
+      </div>
+    </div>
+</section>
+
 
 <!-- Skills Section -->
 <section id="skills" class="section">
@@ -303,6 +313,9 @@
     <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div class="skill-box group">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Jupyter_logo.svg" alt="JupyterLab" class="skill-icon">
         </div>
         <div class="skill-box group">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg" alt="NumPy" class="skill-icon">
@@ -337,9 +350,6 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg" alt="Flask" class="skill-icon">
         </div>
         <div class="skill-box group">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Streamlit-logo-primary-colormark-darktext.png" alt="Streamlit" class="skill-icon">
-        </div>
-        <div class="skill-box group">
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/MySQL_textlogo.svg" alt="MySQL" class="skill-icon">
         </div>
         <div class="skill-box group">
@@ -370,7 +380,11 @@
 
     <!-- Development & Tools -->
     <h3 class="text-2xl font-bold mt-6">Development & Tools</h3>
+    
     <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Streamlit-logo-primary-colormark-darktext.png" alt="Streamlit" class="skill-icon">
+        </div>
         <div class="skill-box group">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg" alt="Git" class="skill-icon">
         </div>
@@ -390,73 +404,87 @@
 
     <script>
         const { createApp } = Vue;
-        createApp({
-            data() {
-                return {
-                    name: "Imran Nazir",
-                    role: "Data Analyst | Machine Learning Enthusiast",
-                    darkMode: false,
-                    isMobileNavOpen: false,
-                    resumeLink: "resume.pdf", 
-                    menuItems: [
-                        { name: "Home", link: "#home" },
-                        { name: "Projects", link: "#projects" },
-                        { name: "Skills", link: "#skills" },
-                        { name: "Contact", link: "#contact" }
-                    ],
-                    projects: [
-                        {
-                            id: 1,
-                            title: "DC-DC Converter Analysis",
-                            description: "Optimized a 2:1 switched capacitor DC-DC converter using ML techniques.",
-                            link: "https://github.com/imran-nazir0011/minor-project-7th-sem",
-                            image: "img/dc_converter.jpg"
-                        },
-                        {
-                            id: 2,
-                            title: "Crime Classification Web App",
-                            description: "Developed an ML-based crime prediction system.",
-                            link: "https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories",
-                            image: "img/crime_classification.jpg"
-                        },
-                        {
-                            id: 3,
-                            title: "Google Play Store Reviews Analytics",
-                            description: "Built an interactive dashboard for Play Store reviews analysis.",
-                            link: "https://imran-nazir0011.github.io/Google-Play-Store-Reviews-Analytics/dashboard.html",
-                            image: "img/playstore_dashboard.jpg"
-                        },
-                    ]
-                };
-            },
-            methods: {
-                toggleDarkMode() {
-                    this.darkMode = !this.darkMode;
-                    document.documentElement.classList.toggle('dark', this.darkMode);
-                    document.documentElement.classList.toggle('light', !this.darkMode);
+createApp({
+    data() {
+        return {
+            name: "Imran Nazir",
+            role: "Data Analyst | Machine Learning Enthusiast",
+            darkMode: false,
+            isMobileNavOpen: false,
+            resumeLink: "resume.pdf",
+            menuItems: [
+                { name: "Home", link: "#home" },
+                { name: "Projects", link: "#projects" },
+                { name: "Skills", link: "#skills" },
+                { name: "Contact", link: "#contact" }
+            ],
+            projects: [
+                {
+                    id: 1,
+                    title: "DC-DC Converter Analysis",
+                    description: "Optimized a 2:1 switched capacitor DC-DC converter using ML techniques.",
+                    link: "https://github.com/imran-nazir0011/minor-project-7th-sem",
+                    images: ["img/dc_converter1.png", "img/dc_converter2.png", "img/dc_converter3.png"]
                 },
-                toggleMobileNav() {
-                    this.isMobileNavOpen = !this.isMobileNavOpen;
+                {
+                    id: 2,
+                    title: "Crime Classification Web App",
+                    description: "Developed an ML-based crime prediction system.",
+                    link: "https://imran-nazir0011-crimecast-forecasting-crime-categori-run-bgvlv4.streamlit.app/",
+                    images: ["img/crime_classification1.png", "img/crime_classification2.png", "img/crime_classification3.png"]
                 },
-                closeMobileNav() {
-                    this.isMobileNavOpen = false; // Close mobile navigation
-                },
-                handleResize() {
-                    if (window.innerWidth >= 768) { // 768px is the breakpoint for 'md' in Tailwind
-                        this.closeMobileNav(); // Close mobile navigation on medium or larger screens
-                    }
-                },
-                openProject(link) {
-                    window.open(link, "_blank");
+                {
+                    id: 3,
+                    title: "Google Play Store Reviews Analytics",
+                    description: "Built an interactive dashboard for Play Store reviews analysis.",
+                    link: "https://imran-nazir0011.github.io/Google-Play-Store-Reviews-Analytics/dashboard.html",
+                    images: ["img/playstore1.png", "img/playstore2.png", "img/playstore3.png"]
                 }
-            },
-            mounted() {
-                window.addEventListener('resize', this.handleResize); // Add resize event listener
-            },
-            beforeDestroy() {
-                window.removeEventListener('resize', this.handleResize); // Clean up resize event listener
+            ],
+            currentImageIndex: {} // Stores the current image index for each project
+        };
+    },
+    methods: {
+        toggleDarkMode() {
+            this.darkMode = !this.darkMode;
+            document.documentElement.classList.toggle('dark', this.darkMode);
+            document.documentElement.classList.toggle('light', !this.darkMode);
+        },
+        toggleMobileNav() {
+            this.isMobileNavOpen = !this.isMobileNavOpen;
+        },
+        closeMobileNav() {
+            this.isMobileNavOpen = false;
+        },
+        handleResize() {
+            if (window.innerWidth >= 768) {
+                this.closeMobileNav();
             }
-        }).mount("#app");
+        },
+        openProject(link) {
+            window.open(link, "_blank");
+        },
+        startSlideshow(projectId) {
+            setInterval(() => {
+                this.currentImageIndex[projectId] = 
+                    (this.currentImageIndex[projectId] + 1) % this.projects.find(p => p.id === projectId).images.length;
+            }, 3000); // Change image every 3 seconds
+        }
+    },
+    mounted() {
+        window.addEventListener('resize', this.handleResize);
+
+        // Initialize image indexes and start the slideshows
+        this.projects.forEach(project => {
+            this.currentImageIndex[project.id] = 0;
+            this.startSlideshow(project.id);
+        });
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    }
+}).mount("#app");
+
     </script>
 </body>
 </html>
