@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Imran Nazir</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .dark {
+        background-color: #1a202c;
+        color: #e2e8f0;
+    }
+    
+    .light {
+        background-color: #ffffff;
+        color: #1a202c;
+    }
+    
+    /* Navbar & Section Background */
+    .dark .navbar, .dark .section, .dark .project-card {
+        background-color: #2d3748;
+    }
+    
+    .light .navbar, .light .section, .light .project-card {
+        background-color: #f3f4f6;
+        color: #1a202c;
+    }
+    
+    /* Hero Section */
+    .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 5%;
+        padding-top: 80px; /* Prevents navbar overlap */
+    }
+    
+    /* Section Styling */
+    .section {
+        padding: 80px 5%;
+        margin: 0 auto;
+        max-width: 1200px;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+    
+    /* Project Cards */
+    .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Project Image */
+    .project-image {
+        position: relative;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Project Description Overlay */
+    .project-description {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 1rem;
+        text-align: center;
+    }
+    
+    .project-card:hover .project-description {
+        opacity: 1;
+    }
+    
+    /* Profile Image */
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #3B82F6; /* Blue border */
+        margin-right: 2rem;
+    }
+    
+    /* Caption Styling */
+    .caption {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+        font-size: 1rem;
+        color: #6B7280; /* Gray text */
+    }
+    
+    .caption svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+    }
+    
+    /* Navbar Logo */
+    .navbar-logo {
+        transition: transform 0.3s ease;
+    }
+    
+    .navbar-logo.rotate-90 {
+        transform: rotate(90deg);
+    }
+    
+    /* Mobile Navigation */
+    .mobile-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: inherit;
+        z-index: 10;
+    }
+    
+    .mobile-nav.open {
+        display: flex;
+    }
+    
+    /* Menu Icon */
+    .menu-icon {
+        transition: transform 0.3s ease;
+    }
+    
+    .menu-icon.rotate-90 {
+        transform: rotate(90deg);
+    }
+    
+    /* Skill Box */
+    .skill-box {
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--bg-color, white);
+        position: relative;
+    }
+    
+    /* Skill Icons */
+    .skill-icon {
+        width: 100px;
+        height: 100px;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Hover Effect for Skill Icons */
+    .group:hover .skill-icon {
+        transform: scale(1.1);
+    }
+    
+    /* Skill Name on Hover */
+    .skill-text {
+        position: absolute;
+        bottom: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .group:hover .skill-text {
+        opacity: 1;
+    }
+</style>
+    
+</head>
+<body :class="darkMode ? 'dark' : 'light'">
+    <div id="app">
+        <nav class="navbar w-full py-4 px-8 shadow-md fixed top-0 z-20 flex justify-between items-center" :class="darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-900'">
+            <!-- Navbar Logo -->
+            <div class="flex items-center">
+              <h1 class="text-2xl font-bold ml-2">{{ name }}</h1>
+            </div>
+        
+            <!-- Desktop Navigation -->
+            <button @click="toggleMobileNav" class="md:hidden text-white focus:outline-none">
+              <span class="menu-icon" :class="{ 'rotate-90': isMobileNavOpen }">☰</span>
+            </button>
+            <div class="hidden md:flex items-center space-x-4">
+              <ul class="flex space-x-6">
+                <li v-for="item in menuItems" :key="item.link">
+                  <a :href="item.link" @click="closeMobileNav" class="hover:text-blue-400">{{ item.name }}</a>
+                </li>
+              </ul>
+              <button @click="toggleDarkMode" class="p-2 rounded-full transition duration-300" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900'">
+                <svg v-if="darkMode" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              </button>
+            </div>
+        
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav" :class="{ 'open': isMobileNavOpen }">
+              <ul class="flex flex-col space-y-4 p-4">
+                <li v-for="item in menuItems" :key="item.link">
+                  <a :href="item.link" @click="closeMobileNav" class="hover:text-blue-400">{{ item.name }}</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+<br>
+<br>
+<br>
+
+<!-- Hero Section -->
+<section id="home" class="hero section" :class="darkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'" style="padding-top: 80px;">
+    <div class="flex flex-col md:flex-row items-center">
+        <!-- Profile Image -->
+        <div class="text-center mb-8 md:mb-0 md:mr-8">
+            <img src="img/myphoto.png" alt="Imran Nazir" class="profile-image">
+            <!-- Caption -->
+            <div class="caption mt-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                <span>Available for Freelance</span>
+            </div>
+        </div>
+        <!-- Text Content -->
+        <div class="text-left">
+            <h1 class="text-5xl font-extrabold">Hi, I'm {{ name }}</h1>
+            <p class="text-xl mt-4">{{ role }}</p>
+            <p class="mt-4">Passionate about data science, analytics, and machine learning.</p>
+            <div class="mt-6 flex space-x-4">
+                <a href="#projects" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg">View My Work</a>
+                <a href="resume.html" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg">My Resume</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section" :class="darkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'">
+            <h2 class="text-3xl font-bold">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                <div v-for="project in projects" :key="project.id" class="project-card rounded-lg shadow-lg p-6 transition duration-300" :class="darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'" @click="openProject(project.link)">
+                    <div class="project-image">
+                        <img :src="project.image" class="w-full h-48 object-cover rounded-lg">
+                        <div class="project-description">
+                            <p>{{ project.description }}</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4">{{ project.title }}</h3>
+                </div>
+            </div>
+            <!-- More Projects Button -->
+            <div class="mt-8 text-center">
+                <a href="https://github.com/yourusername" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    View More Projects
+                </a>
+            </div>
+        </section>
+
+<!-- Skills Section -->
+<section id="skills" class="section">
+    <h2 class="text-3xl font-bold">Skills</h2>
+
+    <!-- Data Science & Machine Learning -->
+    <h3 class="text-2xl font-bold mt-6">Data Science & Machine Learning</h3>
+    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg" alt="NumPy" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Pandas_logo.svg" alt="Pandas" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg" alt="Matplotlib" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://seaborn.pydata.org/_images/logo-tall-lightbg.svg" alt="Seaborn" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Plotly-logo.png" alt="Plotly" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/SCIPY_2.svg" alt="SciPy" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Power BI" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg" alt="Excel" class="skill-icon">
+        </div>
+    </div>
+
+    <!-- Backend & Databases -->
+    <h3 class="text-2xl font-bold mt-6">Backend & Databases</h3>
+    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg" alt="Flask" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Streamlit-logo-primary-colormark-darktext.png" alt="Streamlit" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/MySQL_textlogo.svg" alt="MySQL" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" alt="PostgreSQL" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/SQLite370.svg" alt="SQLite" class="skill-icon">
+        </div>
+    </div>
+
+    <!-- Frontend Development -->
+    <h3 class="text-2xl font-bold mt-6">Frontend Development</h3>
+    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" alt="bootstrap" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="tailwind" class="skill-icon">
+        </div>
+        
+    </div>
+
+    <!-- Development & Tools -->
+    <h3 class="text-2xl font-bold mt-6">Development & Tools</h3>
+    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg" alt="Git" class="skill-icon">
+        </div>
+        <div class="skill-box group">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" class="skill-icon">
+        </div>
+    </div>
+</section>
+
+
+        <!-- Contact Section -->
+        <section id="contact" class="section" :class="darkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'">
+            <h2 class="text-3xl font-bold">Contact Me</h2>
+            <p class="mt-4">Email: your.email@example.com | LinkedIn: linkedin.com/in/yourname</p>
+        </section>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    name: "Imran Nazir",
+                    role: "Data Analyst | Machine Learning Enthusiast",
+                    darkMode: false,
+                    isMobileNavOpen: false,
+                    resumeLink: "resume.pdf", 
+                    menuItems: [
+                        { name: "Home", link: "#home" },
+                        { name: "Projects", link: "#projects" },
+                        { name: "Skills", link: "#skills" },
+                        { name: "Contact", link: "#contact" }
+                    ],
+                    projects: [
+                        {
+                            id: 1,
+                            title: "DC-DC Converter Analysis",
+                            description: "Optimized a 2:1 switched capacitor DC-DC converter using ML techniques.",
+                            link: "https://github.com/imran-nazir0011/minor-project-7th-sem",
+                            image: "img/dc_converter.jpg"
+                        },
+                        {
+                            id: 2,
+                            title: "Crime Classification Web App",
+                            description: "Developed an ML-based crime prediction system.",
+                            link: "https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories",
+                            image: "img/crime_classification.jpg"
+                        },
+                        {
+                            id: 3,
+                            title: "Google Play Store Reviews Analytics",
+                            description: "Built an interactive dashboard for Play Store reviews analysis.",
+                            link: "https://imran-nazir0011.github.io/Google-Play-Store-Reviews-Analytics/dashboard.html",
+                            image: "img/playstore_dashboard.jpg"
+                        },
+                    ]
+                };
+            },
+            methods: {
+                toggleDarkMode() {
+                    this.darkMode = !this.darkMode;
+                    document.documentElement.classList.toggle('dark', this.darkMode);
+                    document.documentElement.classList.toggle('light', !this.darkMode);
+                },
+                toggleMobileNav() {
+                    this.isMobileNavOpen = !this.isMobileNavOpen;
+                },
+                closeMobileNav() {
+                    this.isMobileNavOpen = false; // Close mobile navigation
+                },
+                handleResize() {
+                    if (window.innerWidth >= 768) { // 768px is the breakpoint for 'md' in Tailwind
+                        this.closeMobileNav(); // Close mobile navigation on medium or larger screens
+                    }
+                },
+                openProject(link) {
+                    window.open(link, "_blank");
+                }
+            },
+            mounted() {
+                window.addEventListener('resize', this.handleResize); // Add resize event listener
+            },
+            beforeDestroy() {
+                window.removeEventListener('resize', this.handleResize); // Clean up resize event listener
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>
